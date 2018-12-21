@@ -53,9 +53,6 @@ stage1_main:
 	cmp ah, 0x00
 	jne .error
 
-	mov si, strings.panic
-	call printc
-
 	jmp 0x0000 : stage1.buffer
 
 .done:
