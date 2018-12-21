@@ -1,0 +1,7 @@
+label: dos
+label-id: 0xFEEFFEEF
+device: build/skyline-legacy-x64.img
+unit: sectors
+grain: 512
+
+build/skyline-legacy-x64.img1 : start=          10, size=        1014, type=83
