@@ -1,11 +1,15 @@
 support_error_none    equ 0x00
 support_error_nocpuid equ 0x01
+support_error_noinfo  equ 0x02
 
 ; will check if our cpu supports long mode, sets ah with the status
 test_64bit_support:
 	; check if our cpu supports the cpuid opcode, if not long mode is not supported
 	call has_cpuid
 	jnc .error.no_cpuid
+
+	call has_processor_info
+	jnc .error.no_info
 
 	; set our status to success and return
 	mov ah, support_error_none
@@ -14,6 +18,11 @@ test_64bit_support:
 .error.no_cpuid:
 	; set our status to support_error_nocpuid and return
 	mov ah, support_error_nocpuid
+	ret
+
+.error.no_info:
+	; set our status to support_error_noinfo and return
+	mov ah, support_error_noinfo
 	ret
 
 ; will set carry bit if cpuid is supported
@@ -61,4 +70,27 @@ has_cpuid:
 	pop ecx
 	pop eax
 
+	ret
+
+has_processor_info:
+	; store used registers
+	push eax
+
+	; unset carry flag to signify failure
+	clc
+
+	; check if the function is supported
+	mov eax, 0x80000000
+	cpuid
+	cmp eax, 0x80000001
+	
+	; if not don't set the carry flag
+	jz .done
+
+	; set the carry flag to signify success
+	stc
+
+.done:
+	; restore registers and return
+	pop eax
 	ret

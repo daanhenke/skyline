@@ -50,6 +50,9 @@ real_main:
 	cmp al, support_error_nocpuid
 	je .error.no_cpuid
 
+	cmp al, support_error_noinfo
+	je .error.no_info
+
 .long_mode_supported:
 	; inform the user long mode is available
 	mov si, strings_stage2.long_success
@@ -65,6 +68,11 @@ real_main:
 
 .error.no_cpuid:
 	mov si, strings_stage2.long_no_cpuid
+	call info
+	jmp hang
+
+.error.no_info:
+	mov si, strings_stage2.long_no_info
 	call info
 	jmp hang
 
