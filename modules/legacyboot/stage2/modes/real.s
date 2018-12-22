@@ -35,17 +35,36 @@ real_main:
 
 	; check if we enabled it
 	call test_upper_memory
-	jnc error_a20
+	jnc .error.a20
 
 	; tell the user we enabled the A20 line
 	mov si, strings_stage2.enabled_a20
 	call info
 
+	; check if our cpu supports long mode and show error messages if result is not support_error_none
+	call test_64bit_support
+
+	cmp al, support_error_none
+	je .long_mode_supported
+
+	cmp al, support_error_nocpuid
+	je .error.no_cpuid
+
+.long_mode_supported:
+	; inform the user long mode is available
+	mov si, strings_stage2.long_success
+	call info
+
 	; return
 	ret
 
-error_a20:
+.error.a20:
 	mov si, strings_stage2.couldnt_enable_a20
+	call info
+	jmp hang
+
+.error.no_cpuid:
+	mov si, strings_stage2.long_no_cpuid
 	call info
 	jmp hang
 

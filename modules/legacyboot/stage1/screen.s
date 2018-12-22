@@ -2,6 +2,8 @@
 printc:
 	; save current registers to stack so we dont ruin their values
 	pusha
+
+	cld
 .loop:
 	; read out the current byte stored at ram[si] and write it in al then increment si
 	lodsb

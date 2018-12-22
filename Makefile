@@ -3,7 +3,7 @@ LEGACY_IMG=skyline-legacy-x64.img
 all: legacy
 
 run: legacy
-	@qemu-system-x86_64 -hda build/$(LEGACY_IMG)
+	@qemu-system-x86_64 -d in_asm -hda build/$(LEGACY_IMG) -D /tmp/qemu
 
 legacy: build_directory legacyboot
 	@echo Building legacy image
