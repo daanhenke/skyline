@@ -1,0 +1,1 @@
+stage2.stack.top equ 0x7C00

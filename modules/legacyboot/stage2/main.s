@@ -29,3 +29,5 @@ bits 16
 %include "stage2/modes/extended.s"
 
 %include "stage2/strings.s"
+%include "stage2/pointers.s"
+%include "stage2/a20.s"
