@@ -53,7 +53,7 @@ stage1_main:
 	mov dl, [es:globals.active_drive]
 	mov bx, stage1.buffer
 	int 0x13
-
+	
 	; check if the read was succesful
 	cmp ah, 0x00
 	jne .error
