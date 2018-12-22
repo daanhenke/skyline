@@ -1,3 +1,4 @@
 struc globals, stage1.globals
-	.activeDrive resd 1
+	.active_drive resd 1
+	.current_stage resb 1
 endstruc

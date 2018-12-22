@@ -3,24 +3,29 @@ org 0x9000
 
 [map all build/stage2.map]
 
-stage1_main:
-	cli
+stage2_main:
+	; do our 16 bit stuff
+	call real_main
 
-	xor ax, ax
-	mov ds, ax
-	mov es, ax
-	mov fs, ax
-	mov gs, ax
-	mov ss, ax
+	; switch to 32 bits & do 32 bit stuff
+bits 32
+	call protected_main
 
-	call panic
+	; switcch to 64 bits & do 64 bit stuff
+bits 64
+	call extended_main
 
-panic:
-	mov si, strings.stage2
-	call printc
-.loop:
-	jmp .loop
+	; switch back to 16 bits so we can still use some of our stage1 functions
+bits 16
 
 %include "include/pointers.s"
+%include "stage1/globals.s"
+
 %include "stage1/strings.s"
 %include "stage1/screen.s"
+
+%include "stage2/modes/real.s"
+%include "stage2/modes/protected.s"
+%include "stage2/modes/extended.s"
+
+%include "stage2/strings.s"

@@ -10,4 +10,4 @@ stage1: build_directory
 	@$(AS) stage1/main.s -I stage1 -I include -f bin -o build/stage1.bin
 
 stage2: build_directory
-	@$(AS) stage2/main.s -I stage1 -I include -f bin -o build/stage2.bin
+	@$(AS) stage2/main.s -I stage1 -I include -I stage1/modes -f bin -o build/stage2.bin
