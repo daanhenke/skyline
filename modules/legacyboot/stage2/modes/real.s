@@ -61,6 +61,27 @@ real_main:
 	mov si, strings_stage2.long_success
 	call info
 
+	; try to enable the SSE
+	call enable_sse
+
+	; another error switch statement thing
+	cmp al, sse_error_none
+	je .sse_succes
+
+	cmp al, sse_error_no_fx
+	je .error.no_fx
+
+	cmp al, sse_error_no_sse1
+	je .error.no_sse1
+
+	cmp al, sse_error_no_sse2
+	je .error.no_sse2
+
+.sse_succes:
+	; tell the user sse is enabled
+	mov si, strings_stage2.sse_success
+	call info
+
 	; return
 	ret
 
@@ -76,6 +97,21 @@ real_main:
 
 .error.no_info:
 	mov si, strings_stage2.long_no_info
+	call info
+	jmp hang
+
+.error.no_fx:
+	mov si, strings_stage2.sse_no_fx
+	call info
+	jmp hang
+
+.error.no_sse1:
+	mov si, strings_stage2.sse_no_sse1
+	call info
+	jmp hang
+
+.error.no_sse2:
+	mov si, strings_stage2.sse_no_sse2
 	call info
 	jmp hang
 

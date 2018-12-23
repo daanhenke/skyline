@@ -32,3 +32,4 @@ bits 16
 %include "stage2/pointers.s"
 %include "stage2/a20.s"
 %include "stage2/long.s"
+%include "stage2/sse.s"
