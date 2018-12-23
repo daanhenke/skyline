@@ -33,3 +33,5 @@ bits 16
 %include "stage2/a20.s"
 %include "stage2/long.s"
 %include "stage2/sse.s"
+%include "stage2/tss.s"
+%include "stage2/gdt.s"

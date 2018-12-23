@@ -85,6 +85,29 @@ real_main:
 	mov si, strings_stage2.sse_success
 	call info
 
+	; copy the GDT to it's correct place in RAM
+	call gdt_load
+
+	; inform user of success
+	mov si, strings_stage2.descriptor_success
+	call info
+
+	; copy the TSS to it's correct place in RAM
+	call tss_load
+
+	; inform the user of success
+	mov si, strings_stage2.task_success
+	call info
+
+	;mov si, strings_stage2.page_success
+	;call info
+
+	;mov si, strings_stage2.long_enabled
+	;call info
+
+	;mov si, strings_stage2.success
+	;call info
+
 	; return
 	ret
 
@@ -127,6 +150,6 @@ real_main:
 hang:
 	mov si, strings_stage2.panic
 	call info
-.loop
+.loop:
 	hlt
 	jmp .loop

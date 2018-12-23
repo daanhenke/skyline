@@ -36,7 +36,7 @@ test_64bit_support:
 	mov ah, support_error_noinfo
 	jmp .done
 
-.error.no_long
+.error.no_long:
 	; set our status to support_error_nolong and return
 	mov ah, support_error_nolong
 	jmp .done

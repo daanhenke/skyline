@@ -13,3 +13,9 @@ strings_stage2.sse_success db "sse enabled", 0x0D, 0x0A, 0x00
 strings_stage2.sse_no_fx db "cpu does not support FXSAVE/FXRSTOR", 0x0D, 0x0A, 0x00
 strings_stage2.sse_no_sse1 db "cpu does not support SSE1", 0x0D, 0x0A, 0x00
 strings_stage2.sse_no_sse2 db "cpu does not support SSE2", 0x0D, 0x0A, 0x00
+
+strings_stage2.descriptor_success db "succesfully set up global descriptor table", 0x0D, 0x0A, 0x00
+strings_stage2.task_success db "succesfully set up task state segment", 0x0D, 0x0A, 0x00
+strings_stage2.page_success db "succesfully set up page tables", 0x0D, 0x0A, 0x00
+strings_stage2.long_enabled db "switched cpu to long mode", 0x0D, 0x0A, 0x00
+strings_stage2.success db "jumping to stage3!", 0x0D, 0x0A, 0x00
