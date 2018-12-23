@@ -56,6 +56,9 @@ real_main:
 	cmp al, support_error_noinfo
 	je .error.no_info
 
+	cmp al, support_error_nolong
+	je .error.no_long
+
 .long_mode_supported:
 	; inform the user long mode is available
 	mov si, strings_stage2.long_success
@@ -97,6 +100,11 @@ real_main:
 
 .error.no_info:
 	mov si, strings_stage2.long_no_info
+	call info
+	jmp hang
+
+.error.no_long:
+	mov si, strings_stage2.long_no_long
 	call info
 	jmp hang
 
