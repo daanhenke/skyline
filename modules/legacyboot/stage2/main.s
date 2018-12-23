@@ -13,7 +13,7 @@ bits 32
 
 	; switcch to 64 bits & do 64 bit stuff
 bits 64
-	call extended_main
+	call long_main
 
 	; switch back to 16 bits so we can still use some of our stage1 functions
 bits 16
@@ -26,7 +26,7 @@ bits 16
 
 %include "stage2/modes/real.s"
 %include "stage2/modes/protected.s"
-%include "stage2/modes/extended.s"
+%include "stage2/modes/long.s"
 
 %include "stage2/strings.s"
 %include "stage2/pointers.s"
