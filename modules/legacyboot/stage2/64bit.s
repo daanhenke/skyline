@@ -1,6 +1,7 @@
 support_error_none    equ 0x00
 support_error_nocpuid equ 0x01
 support_error_noinfo  equ 0x02
+support_error_nolong  equ 0x03
 
 ; will check if our cpu supports long mode, sets ah with the status
 test_64bit_support:
@@ -8,22 +9,37 @@ test_64bit_support:
 	call has_cpuid
 	jnc .error.no_cpuid
 
+	; check if the cpu supports the processor info function
 	call has_processor_info
 	jnc .error.no_info
 
+	; use the processor info function to check if the cpu supports long mode
+	mov eax, 0x80000001
+	cpuid
+
+	; bit 29 tells us if we have 64 bit mode
+	test edx, (1 << 29)
+	jz .error.no_long
+
 	; set our status to success and return
 	mov ah, support_error_none
+.done:
 	ret
 
 .error.no_cpuid:
 	; set our status to support_error_nocpuid and return
 	mov ah, support_error_nocpuid
-	ret
+	jmp .done
 
 .error.no_info:
 	; set our status to support_error_noinfo and return
 	mov ah, support_error_noinfo
-	ret
+	jmp .done
+
+.error.no_long
+	; set our status to support_error_nolong and return
+	mov ah, support_error_nolong
+	jmp .done
 
 ; will set carry bit if cpuid is supported
 has_cpuid:

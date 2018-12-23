@@ -44,9 +44,12 @@ real_main:
 	; check if our cpu supports long mode and show error messages if result is not support_error_none
 	call test_64bit_support
 
+	; if no errors were reported we don't need to compare all
+	; the error codes so we jump past them
 	cmp al, support_error_none
 	je .long_mode_supported
 
+	; error handling for long mode errors
 	cmp al, support_error_nocpuid
 	je .error.no_cpuid
 
@@ -76,5 +79,10 @@ real_main:
 	call info
 	jmp hang
 
+; stop executing and tell the user we did
 hang:
-	jmp hang
+	mov si, strings_stage2.panic
+	call info
+.loop
+	hlt
+	jmp .loop
