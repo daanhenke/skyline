@@ -3,6 +3,31 @@ support_error_nocpuid equ 0x01
 support_error_noinfo  equ 0x02
 support_error_nolong  equ 0x03
 
+; will switch the cpu to long mode, enable paging and load the gdt
+long_enable:
+	; enable long mode and syscall/sysret
+	mov ecx, 0xC0000080
+	rdmsr
+	or eax, (1 << 8) | (1 << 0)
+	wrmsr
+
+	; enable paging and protected mode
+	mov eax, cr0
+	or eax, (1 << 31) | (1 << 0)
+	mov cr0, eax
+
+	; enable global pages
+	mov eax, cr4
+	or eax, (1 << 7)
+	mov cr4, eax
+
+	; load our gdt
+	lgdt [gdt.table.pointer]
+
+	; far jump to our long mode code
+	jmp gdt.selector.kernel.code :  long_main
+
+
 ; will check if our cpu supports long mode, sets ah with the status
 test_64bit_support:
 	; check if our cpu supports the cpuid opcode, if not long mode is not supported
@@ -36,7 +61,7 @@ test_64bit_support:
 	mov ah, support_error_noinfo
 	jmp .done
 
-.error.no_long
+.error.no_long:
 	; set our status to support_error_nolong and return
 	mov ah, support_error_nolong
 	jmp .done
