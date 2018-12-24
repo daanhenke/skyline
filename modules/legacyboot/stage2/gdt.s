@@ -86,6 +86,16 @@ gdt.table:
 	iend
 gdt.table.size equ ($ - gdt.table)
 
+; store the limit (offset of last byte) of our gdt and the actual pointer to our gdt
+gdt.table.pointer:
+	dw gdt.table.size - 1
+	dq stage2.gdt
+
+gdt.selector:
+	.kernel.data equ 0x08
+	.kernel.code equ 0x10
+	.tts         equ 0x18
+
 ; copies the GDT to where it needs to go and returns
 gdt_load:
 	mov si, gdt.table

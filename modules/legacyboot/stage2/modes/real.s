@@ -99,17 +99,15 @@ real_main:
 	mov si, strings_stage2.task_success
 	call info
 
-	;mov si, strings_stage2.page_success
-	;call info
+	call page_load
 
-	;mov si, strings_stage2.long_enabled
-	;call info
+	mov si, strings_stage2.page_success
+	call info
 
-	;mov si, strings_stage2.success
-	;call info
+	mov si, strings_stage2.success
+	call info
 
-	; return
-	ret
+	call long_enable
 
 .error.a20:
 	mov si, strings_stage2.couldnt_enable_a20

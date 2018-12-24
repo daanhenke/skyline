@@ -1,5 +1,5 @@
 bits 16
-org 0x9000
+org 0x8000
 
 [map all build/stage2.map]
 
@@ -7,13 +7,8 @@ stage2_main:
 	; do our 16 bit stuff
 	call real_main
 
-	; switch to 32 bits & do 32 bit stuff
-bits 32
-	call protected_main
-
 	; switcch to 64 bits & do 64 bit stuff
-bits 64
-	call long_main
+	call gdt.selector.kernel.code : long_main
 
 	; switch back to 16 bits so we can still use some of our stage1 functions
 bits 16
@@ -35,3 +30,4 @@ bits 16
 %include "stage2/sse.s"
 %include "stage2/tss.s"
 %include "stage2/gdt.s"
+%include "stage2/page.s"

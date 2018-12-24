@@ -18,4 +18,4 @@ strings_stage2.descriptor_success db "succesfully set up global descriptor table
 strings_stage2.task_success db "succesfully set up task state segment", 0x0D, 0x0A, 0x00
 strings_stage2.page_success db "succesfully set up page tables", 0x0D, 0x0A, 0x00
 strings_stage2.long_enabled db "switched cpu to long mode", 0x0D, 0x0A, 0x00
-strings_stage2.success db "jumping to stage3!", 0x0D, 0x0A, 0x00
+strings_stage2.success db "switching to long mode", 0x0D, 0x0A, 0x00
