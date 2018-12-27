@@ -68,6 +68,11 @@ page_load:
 	add di, 0x08
 	loop .page_loop
 
+	; disable cache on video RAM so our updates are actually put on screen
+	mov edi, stage2.video
+	mov cx, 32
+	call page_mark_nocache
+
 	; enable page tables by writing our parent table to cr3
 	mov edi, stage2.page_table
 	mov cr3, edi
@@ -79,4 +84,16 @@ page_load:
 
 	; restore es and return
 	pop es
+	ret
+
+page_mark_nocache:
+	shr edi, 9
+	add edi, stage2.page_table.pt & 0xFFFF
+.loop:
+	mov eax, [es:di]
+	or eax, page_table_entry.cache_disabled | page_table_entry.write_trough | page_table_entry.pat_memory_type
+	mov [es:di], eax
+	add di, 8
+	loop .loop
+
 	ret

@@ -10,7 +10,8 @@ legacy: build_directory legacyboot
 	@dd if=/dev/zero of=build/$(LEGACY_IMG) bs=512 count=1024
 	@sfdisk build/$(LEGACY_IMG) < legacy.sfdisk
 	@dd if=build/legacyboot/stage1.bin of=build/$(LEGACY_IMG) bs=1 skip=0 count=446 conv=notrunc
-	@dd if=build/legacyboot/stage2.bin of=build/$(LEGACY_IMG) bs=512 seek=1 count=9 conv=notrunc
+	@dd if=build/legacyboot/stage2.bin of=build/$(LEGACY_IMG) bs=512 seek=1 count=4 conv=notrunc
+	@dd if=build/legacyboot/stage3.bin of=build/$(LEGACY_IMG) bs=512 seek=5 count=20 conv=notrunc
 
 build_directory:
 	@echo Making build directory

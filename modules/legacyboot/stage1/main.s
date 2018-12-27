@@ -46,12 +46,26 @@ stage1_main:
 
 	; read the stage2 sectors from our active hdd
 	mov ah, 0x02
-	mov al, 9
+	mov al, 4
 	mov ch, 0
 	mov cl, 2
 	mov dh, 0
 	mov dl, [es:globals.active_drive]
-	mov bx, stage1.buffer
+	mov bx, stage1.buffer_stage2
+	int 0x13
+	
+	; check if the read was succesful
+	cmp ah, 0x00
+	jne .error
+
+	; read the stage3 sectors from our active hdd
+	mov ah, 0x02
+	mov al, 10
+	mov ch, 0
+	mov cl, 6
+	mov dh, 0
+	mov dl, [es:globals.active_drive]
+	mov bx, stage1.buffer_stage3
 	int 0x13
 	
 	; check if the read was succesful
@@ -63,7 +77,7 @@ stage1_main:
 	call info
 
 	; jump to our stage2
-	jmp 0x0000 : stage1.buffer
+	jmp 0x0000 : stage1.buffer_stage2
 
 .error:
 	; display error message

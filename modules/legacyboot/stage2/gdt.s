@@ -94,7 +94,7 @@ gdt.table.pointer:
 gdt.selector:
 	.kernel.data equ 0x08
 	.kernel.code equ 0x10
-	.tts         equ 0x18
+	.tss         equ 0x18
 
 ; copies the GDT to where it needs to go and returns
 gdt_load:
