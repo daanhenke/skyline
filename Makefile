@@ -3,7 +3,17 @@ LEGACY_IMG=skyline-legacy-x64.img
 all: legacy
 
 run: legacy
-	@qemu-system-x86_64 -hda build/$(LEGACY_IMG) -d in_asm,int -D /tmp/qemu -no-shutdown -no-reboot -monitor telnet:127.0.0.1:1234,server,nowait
+	@qemu-system-x86_64 \
+	-boot c \
+	-drive file=build/$(LEGACY_IMG),if=none,id=main_hdd \
+	-device ich9-ahci,id=ahci \
+	-device ide-drive,drive=main_hdd,bus=ahci.0 \
+	-d in_asm,int \
+	-D /tmp/qemu \
+	-no-shutdown \
+	-no-reboot \
+	-serial stdio \
+	-monitor telnet:127.0.0.1:1234,server,nowait
 
 legacy: build_directory legacyboot
 	@echo Building legacy image
