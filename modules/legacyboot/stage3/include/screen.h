@@ -27,3 +27,4 @@
 void screen_set_char_attr(int x, int y, char character, char attributes);
 void screen_print_string_attr(const char* string, char attributes);
 void screen_clear();
+void screen_scroll_up();

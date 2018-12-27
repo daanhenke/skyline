@@ -44,7 +44,8 @@ void screen_print_string_attr(const char* string, char attributes) {
 		}
 		if (current_y >= SCREEN_HEIGHT) {
 			// TODO: make the screen scroll instead of overwriting text
-			current_y = 0;
+			current_y = SCREEN_HEIGHT - 1;
+			screen_scroll_up();
 		}
 
 		// if our character is printable print it
@@ -57,4 +58,9 @@ void screen_print_string_attr(const char* string, char attributes) {
 
 void screen_clear() {
 	memset(VIDEO_MEMORY, 0, (SCREEN_WIDTH * SCREEN_HEIGHT) * 2);
+}
+
+void screen_scroll_up() {
+	memcpy(VIDEO_MEMORY, VIDEO_MEMORY + (SCREEN_WIDTH * 2), (SCREEN_WIDTH * SCREEN_HEIGHT * 2) - (SCREEN_WIDTH * 2));
+	memzero(VIDEO_MEMORY + (SCREEN_WIDTH * SCREEN_HEIGHT * 2) - (SCREEN_WIDTH * 2), (SCREEN_WIDTH * 2));
 }
