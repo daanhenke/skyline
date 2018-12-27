@@ -2,6 +2,7 @@
 #include "log.h"
 #include "pci.h"
 #include "devices.h"
+#include "serial.h"
 
 void stage3_main()
 {
@@ -11,6 +12,6 @@ void stage3_main()
     serial_init(COM1);
     log_string(LOG_STATUS, "enabled serial on COM1\n");
 
-    pci_log();
-    ahci_probe_ports(0);
+    pci_init();
+    //ahci_probe_ports(0);
 }
