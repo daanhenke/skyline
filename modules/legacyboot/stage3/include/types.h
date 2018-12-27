@@ -14,3 +14,5 @@ typedef signed char i8;
 typedef signed short i16;
 typedef signed int i32;
 typedef signed long i64;
+
+typedef u8 bool;
