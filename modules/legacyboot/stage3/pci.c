@@ -44,11 +44,18 @@ bool pci_has_function(u32 bus, u32 device, u32 function) {
 	return TRUE;
 }
 
-#define PCI_BUS_COUNT 8
-#define PCI_DEVICES_PER_BUS 32
-#define PCI_FUNCTIONS_PER_DEVICE 8
-#define PCI_FUNCTION_COUNT (PCI_BUS_COUNT * PCI_DEVICES_PER_BUS * PCI_FUNCTIONS_PER_DEVICE)
 static pci_function_t functions[PCI_FUNCTION_COUNT];
+
+pci_function_t pci_get_function(u64 index) {
+	if (index < PCI_FUNCTION_COUNT) {
+		return functions[index];
+	}
+
+	pci_function_t nullfunc;
+	nullfunc.vendor_id = 0xFFFF;
+
+	return nullfunc;
+}
 
 pci_function_t pci_probe_function(u32 bus, u32 device, u32 function) {
 	u64 function_array_index = 0;
@@ -69,6 +76,9 @@ pci_function_t pci_probe_function(u32 bus, u32 device, u32 function) {
 
 	functions[function_array_index].device_id = pci_read_deviceid(bus, device, function);
 	functions[function_array_index].vendor_id = pci_read_vendor(bus, device, function);
+
+	functions[function_array_index].class = pci_read_class(bus, device, function);
+	functions[function_array_index].subclass = pci_read_subclass(bus, device, function);
 
 	for (u64 i = 0; i < 6; i++) {
 		functions[function_array_index].bar[i] = pci_read_bar(bus, device, function, i);
@@ -104,6 +114,5 @@ void pci_init() {
 
 	for (u64 i = 0; i < PCI_BUS_COUNT; i++) {
 		pci_probe_bus(i);
-		log_string(LOG_STATUS, "scanning a bus...\n");
 	}
 }

@@ -42,3 +42,4 @@ typedef volatile struct {
 } ahci_hba_memory_t;
 
 void ahci_probe_ports(ahci_hba_memory_t *ahci_mmio);
+void ahci_init();

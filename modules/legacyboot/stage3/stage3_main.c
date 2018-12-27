@@ -13,5 +13,5 @@ void stage3_main()
     log_string(LOG_STATUS, "enabled serial on COM1\n");
 
     pci_init();
-    //ahci_probe_ports(0);
+    ahci_init();
 }
