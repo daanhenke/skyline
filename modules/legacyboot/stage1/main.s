@@ -59,17 +59,21 @@ stage1_main:
 	jne .error
 
 	; read the stage3 sectors from our active hdd
-	mov ah, 0x02
-	mov al, 10
 	mov ch, 0
 	mov cl, 6
 	mov dh, 0
 	mov dl, [es:globals.active_drive]
-	mov bx, stage1.buffer_stage3
+	mov ax, stage1.buffer_stage3_segment
+	mov es, ax
+	mov ah, 0x02
+	mov al, 16
+	mov bx, 0
 	int 0x13
 	
 	; check if the read was succesful
 	cmp ah, 0x00
+	mov ax, 0
+	mov es, ax
 	jne .error
 
 	; tell the user we're jumping to stage2

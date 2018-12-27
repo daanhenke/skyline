@@ -33,4 +33,4 @@ long_main:
 
 	mov rsp, stage3.stack.main.top
     
-    jmp 0x9000
+    jmp 0x20000
