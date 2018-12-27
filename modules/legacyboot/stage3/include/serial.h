@@ -8,3 +8,5 @@ bool serial_can_write(u16 port);
 
 u8 serial_read(u16 port);
 void serial_write(u16 port, u8 data);
+
+void serial_write_string(u16 port, const char *string);

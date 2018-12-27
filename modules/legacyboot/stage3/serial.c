@@ -30,3 +30,14 @@ void serial_write(u16 port, u8 data) {
     while(serial_can_write(port) == FALSE);
     outb(port, data);
 }
+
+void serial_write_string(u16 port, const char *string) {
+    u64 index = 0;
+    char current = string[index];
+
+    while (current != '\0') {
+        serial_write(port, current);
+        index++;
+        current = string[index];
+    }
+}

@@ -1,14 +1,17 @@
 #include "log.h"
 #include "screen.h"
 #include "types.h"
+#include "devices.h"
+#include "serial.h"
 
 void log_string(u8 level, const char* string) {
-	screen_print_string_attr("[LOG] ", level);
+	log_string_raw(level, "[LOG] ");
 	log_string_raw(level, string);
 }
 
 void log_string_raw(u8 level, const char* string) {
 	screen_print_string_attr(string, level);
+	serial_write_string(COM1, string);
 }
 
 
