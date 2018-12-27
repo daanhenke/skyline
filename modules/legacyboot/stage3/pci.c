@@ -30,6 +30,10 @@ u32 pci_read_hdr(u32 bus, u32 device, u32 function) {
 	return pci_read32(bus, device, function, 0x0c) & 0xFF;
 }
 
+u32 pci_read_bar(u32 bus, u32 device, u32 function, u8 bar_index) {
+	return pci_read32(bus, device, function, (0x10 + sizeof(u32) * bar_index));
+}
+
 u8 pci_log_function(u32 bus, u32 device, u32 function) {
 	u32 vendor = pci_read_vendor(bus, device, function);
 	if (vendor == 0xFFFF) return FALSE;
@@ -38,6 +42,13 @@ u8 pci_log_function(u32 bus, u32 device, u32 function) {
 
 	u32 class = pci_read_class(bus, device, function);
 	u32 subclass = pci_read_subclass(bus, device, function);
+
+	u32 bar0 = pci_read_bar(bus, device, function, 0);
+	u32 bar1 = pci_read_bar(bus, device, function, 1);
+	u32 bar2 = pci_read_bar(bus, device, function, 2);
+	u32 bar3 = pci_read_bar(bus, device, function, 3);
+	u32 bar4 = pci_read_bar(bus, device, function, 4);
+	u32 bar5 = pci_read_bar(bus, device, function, 5);
 
 	log_string_raw(LOG_STATUS, "--device start--\n");
 
@@ -53,6 +64,20 @@ u8 pci_log_function(u32 bus, u32 device, u32 function) {
 	log_u16(LOG_WARNING, class);
 	log_string_raw(LOG_WARNING, " : ");
 	log_u16(LOG_WARNING, subclass);
+	log_string_raw(LOG_WARNING, "\n");
+
+	log_string_raw(LOG_WARNING, "bars:\n");
+	log_u32(LOG_WARNING, bar0);
+	log_string_raw(LOG_WARNING, "\n");
+	log_u32(LOG_WARNING, bar1);
+	log_string_raw(LOG_WARNING, "\n");
+	log_u32(LOG_WARNING, bar2);
+	log_string_raw(LOG_WARNING, "\n");
+	log_u32(LOG_WARNING, bar3);
+	log_string_raw(LOG_WARNING, "\n");
+	log_u32(LOG_WARNING, bar4);
+	log_string_raw(LOG_WARNING, "\n");
+	log_u32(LOG_WARNING, bar5);
 	log_string_raw(LOG_WARNING, "\n");
 
 	log_string_raw(LOG_STATUS, "--device end--\n");
