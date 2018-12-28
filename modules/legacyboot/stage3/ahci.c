@@ -2,9 +2,10 @@
 #include "pci.h"
 #include "log.h"
 #include "types.h"
+#include "page.h"
 
 void ahci_probe_ports(ahci_hba_memory_t *ahci_mmio) {
-	log_u32(LOG_STATUS, ahci_mmio);
+	//log_u32(LOG_STATUS, ahci_mmio);
 	log_u32(LOG_STATUS, ahci_mmio->port_implemented);
 }
 
@@ -17,7 +18,8 @@ void ahci_init() {
 		}
 
 		if (func.class == PCI_CLASS_MASS_STORAGE_DEVICE && func.subclass == PCI_SUBCLASS_SERIAL_ATA) {
-			ahci_probe_ports((ahci_hba_memory_t *) func.bar[5]);
+			page_map_page(0xFEEEF000, func.bar[5], PF_PRESENT | PF_RW);
+			ahci_probe_ports((ahci_hba_memory_t *) 0xFEEEF000);
 		}
 	}
 }
