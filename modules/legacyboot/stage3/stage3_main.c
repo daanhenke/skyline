@@ -3,6 +3,8 @@
 #include "pci.h"
 #include "devices.h"
 #include "serial.h"
+#include "ahci.h"
+#include "page.h"
 
 void stage3_main()
 {
@@ -12,6 +14,10 @@ void stage3_main()
     serial_init(COM1);
     log_string(LOG_STATUS, "enabled serial on COM1\n");
 
+    page_map_page(0x1122334455667788, 0x50000000, PF_PRESENT | PF_RW);
+
+    log_string(LOG_SUCCESS, "still alive!");
+
     pci_init();
-    ahci_init();
+    //ahci_init();
 }

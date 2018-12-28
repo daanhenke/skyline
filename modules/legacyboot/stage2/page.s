@@ -43,6 +43,10 @@ page_load:
 	mov di, stage2.page_table.pml4t & 0xFFFF
 	mov dword [es:di], stage2.page_table.pdpt | page_table_entry.present | page_table_entry.read_write
 
+	; also set pml4t[511] to itself so we can reference it easily
+	add di, (511 * 8)
+	mov dword [es:di], stage2.page_table.pml4t | page_table_entry.present | page_table_entry.read_write
+
 	; set pdpt[0] to the start of our pdt
 	mov di, stage2.page_table.pdpt & 0xFFFF
 	mov dword [es:di], stage2.page_table.pdt | page_table_entry.present | page_table_entry.read_write

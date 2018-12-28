@@ -38,7 +38,6 @@ typedef volatile struct {
     u8 reserved[0x74];
     u8 vendor[0xE0];
     ahci_hba_port_t ports[32];
-
 } ahci_hba_memory_t;
 
 void ahci_probe_ports(ahci_hba_memory_t *ahci_mmio);

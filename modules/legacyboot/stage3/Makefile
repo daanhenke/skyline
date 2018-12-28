@@ -8,7 +8,7 @@ CCFLAGS := -std=gnu11 -Qn -g -m64 -mno-red-zone -mno-mmx -mfpmath=sse \
 LDFLAGS := -g -nostdlib -m64 -mno-red-zone -ffreestanding -lgcc -z \
 			max-page-size=0x1000
 
-STAGE3_OBJECTS = stage3_main.c.o screen.c.o log.c.o pci.c.o serial.c.o ahci.c.o std/memset.c.o asm/start.s.o asm/instructions.s.o
+STAGE3_OBJECTS = stage3_main.c.o screen.c.o log.c.o pci.c.o serial.c.o ahci.c.o page.c.o std/memset.c.o asm/start.s.o asm/instructions.s.o
 STAGE3_INCLUDES = -Iinclude
 
 stage3: $(STAGE3_OBJECTS)
