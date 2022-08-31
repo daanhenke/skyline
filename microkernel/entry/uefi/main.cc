@@ -2,6 +2,7 @@
 
 #include <kmain.hh>
 #include <entry/public/logging.hh>
+#include <entry/public/panic.hh>
 
 namespace efi
 {
@@ -13,8 +14,7 @@ namespace efi
 
         skyline::KernelMain();
 
-        skyline::entry::EarlyLog("KernelMain() returned!\r\n");
-        gBootServices->WaitForEvent(1, &systemTable->ConIn->WaitForKey, nullptr);
+        skyline::entry::EarlyPanic("skyline::KernelMain() returned?!");
         return 0;
     }
 }

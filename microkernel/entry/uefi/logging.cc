@@ -13,6 +13,6 @@ namespace skyline::entry
 
         string::ToWideString(message, wideMessage, sizeof(wchar_t) * (messageLength + 1));
         efi::gStdOut->OutputString(efi::gStdOut, wideMessage);
-        delete wideMessage;
+        delete[] wideMessage;
     }
 }

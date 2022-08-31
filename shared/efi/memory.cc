@@ -6,7 +6,7 @@ namespace efi
     inline void* Allocate(umax size)
     {
         void* result = nullptr;
-        gBootServices->AllocatePool(MemoryType::RuntimeServicesData, size, &result);
+        gBootServices->AllocatePool(MemoryType::BootServicesData, size, &result);
         return result;
     }
 
