@@ -15,6 +15,6 @@ namespace efi
         skyline::KernelMain();
 
         skyline::entry::EarlyPanic("skyline::KernelMain() returned?!");
-        return 0;
+        return 1;
     }
 }
