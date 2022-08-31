@@ -4,9 +4,14 @@ project('microkernel', 'cpp', default_options: [
 
 executable('micro.efi', [
     '../shared/common/string.cc',
+
     '../shared/efi/global.cc',
     '../shared/efi/memory.cc',
+
     'kmain.cc',
+
+    'arch/x86_64/cpu.cc',
+
     'entry/uefi/main.cc',
     'entry/uefi/logging.cc',
     'entry/uefi/panic.cc',
