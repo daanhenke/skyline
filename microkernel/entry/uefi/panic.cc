@@ -2,6 +2,9 @@
 #include <entry/public/logging.hh>
 
 #include <efi/global.hh>
+#include <arch/x86_64/wrappers.hh>
+
+using namespace sharedarch;
 
 namespace skyline::entry
 {
@@ -9,8 +12,9 @@ namespace skyline::entry
     {
         EarlyLog("-----!PANIC!-----\nReason: \"");
         EarlyLog(message);
-        EarlyLog("\"\nPress any key to return to the uefi bootloader\nThe system might be unstable from this point on :(\n-----!PANIC!-----\n");
+        EarlyLog("\"\n-----!PANIC!-----\n");
+        EarlyLog("Halting...\n");
 
-        efi::gBootServices->WaitForEvent(1, &efi::gSystemTable->ConIn->WaitForKey, nullptr);
+        x86_64::_hlt();
     }
 }
