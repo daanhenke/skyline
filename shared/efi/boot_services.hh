@@ -12,8 +12,8 @@ namespace efi
         status (*Foo002)();
         status (*Foo003)();
         status (*Foo004)();
-        status (*Foo005)();
-        status (*Foo006)();
+        status (*AllocatePool)(MemoryType poolType, umax size, void** buffer);
+        status (*FreePool)(void* buffer);
         status (*Foo007)();
         status (*Foo008)();
         status (*WaitForEvent)(umax numberOfEvents, event* events, umax* index);

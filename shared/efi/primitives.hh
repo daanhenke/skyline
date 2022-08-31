@@ -1,24 +1,31 @@
 #pragma once
 
+#include <common/numeric.hh>
+
 namespace efi
 {
-    #include <stdint.h>
-
-    typedef uint8_t u8;
-    typedef uint16_t u16;
-    typedef uint32_t u32;
-    typedef uint64_t u64;
-
-    typedef int8_t s8;
-    typedef int16_t s16;
-    typedef int32_t s32;
-    typedef int64_t s64;
-
-    typedef u64 umax;
-    typedef s64 smax;
-
     typedef u64 status;
 
     typedef void* handle;
     typedef void* event;
+
+    enum class MemoryType
+    {
+        Reserved = 0,
+        LoaderCode,
+        LoaderData,
+        BootServicesCode,
+        BootServicesData,
+        RuntimeServicesCode,
+        RuntimeServicesData,
+        ConventionalMemory,
+        UnusableMemory,
+        ACPIReclaimMemory,
+        ACPIMemoryNVS,
+        MemoryMappedIO,
+        MemoryMappedIOPortSpace,
+        PalCode,
+        PersistentMemory,
+        Max
+    };
 }
