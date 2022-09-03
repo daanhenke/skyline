@@ -41,7 +41,7 @@ namespace string
         }
     }
 
-    char* AppendNumber(char* destination, umax source, int base)
+    char* AppendNumber(char* destination, umax source, int base, int padding = 0)
     {
         umax i = 0;
         bool isNegative = false;
@@ -51,7 +51,7 @@ namespace string
             destination[i++] = '0';
             destination[i] = '\0';
 
-            return destination;
+            return destination + i;
         }
 
         if (source < 0 && base == 10)
@@ -68,6 +68,12 @@ namespace string
         }
 
         if (isNegative) destination[i++] = '-';
+
+        while (i < padding)
+        {
+            destination[i++] = '0';
+        }
+
         destination[i] = '\0';
         Reverse(destination, i);
 

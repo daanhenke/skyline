@@ -21,5 +21,7 @@ namespace efi
 
         gStdOut = systemTable->ConOut;
         gStdErr = systemTable->StdErr;
+
+        gStdOut->ClearScreen(gStdOut);
     }
 }

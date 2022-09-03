@@ -24,18 +24,19 @@ namespace string
     inline char* Append(char* destination, const char* source)
     {
         while (*source != '\0') *destination++ = *source++;
+        *destination = '\0';
         return destination;
     }
 
-    char* AppendNumber(char* destination, umax source, int base);
+    char* AppendNumber(char* destination, umax source, int base, int padding);
 
-    inline char* AppendDecimal(char* destination, umax source)
+    inline char* AppendDecimal(char* destination, umax source, int padding = 0)
     {
-        return AppendNumber(destination, source, 10);
+        return AppendNumber(destination, source, 10, padding);
     }
 
-    inline char* AppendHexadecimal(char* destination, umax source)
+    inline char* AppendHexadecimal(char* destination, umax source, int padding = 0)
     {
-        return AppendNumber(destination, source, 16);
+        return AppendNumber(destination, source, 16, padding);
     }
 }

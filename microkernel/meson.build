@@ -6,7 +6,8 @@ nasm = find_program('nasm')
 nasm_gen = generator(nasm, output: '@BASENAME@.obj', arguments: [ '-f', 'win64', '@INPUT@', '-o', '@OUTPUT@' ])
 
 asm_objects = nasm_gen.process([
-    '../shared/arch/x86_64/asm/wrappers.S'
+    '../shared/arch/x86_64/asm/wrappers.S',
+    'arch/x86_64/register_dumps.S',
 ])
 
 executable('micro.efi', [
@@ -16,6 +17,7 @@ executable('micro.efi', [
     '../shared/efi/memory.cc',
 
     'kmain.cc',
+    'debug/panic.cc',
 
     'arch/x86_64/cpu.cc',
 
