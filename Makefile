@@ -20,4 +20,5 @@ build/artifacts/ovmf.bin:
 qemu-x86_64-uefi: folder-x86_64-uefi ./build/artifacts/ovmf.bin
 	qemu-system-x86_64 \
 		-bios ./build/artifacts/ovmf.bin \
-		-drive file=fat:rw:./dist/x86_64/uefi,format=raw
+		-drive file=fat:rw:./dist/x86_64/uefi,format=raw \
+		-vga cirrus

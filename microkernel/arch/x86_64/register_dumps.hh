@@ -13,6 +13,8 @@ namespace skyline::arch
 
         umax RSI;
         umax RDI;
+        umax RBP;
+        umax RSP;
 
         umax R8;
         umax R9;

@@ -3,7 +3,8 @@
 #include <entry/public/logging.hh>
 #include <arch/public.hh>
 #include <common/string.hh>
-#include <arch/x86_64/wrappers.hh>
+
+#include <arch/x86_64/interrupts.hh>
 
 namespace skyline
 {
@@ -18,5 +19,9 @@ namespace skyline
         entry::EarlyLog(buff);
 
         arch::InitializeCPU();
+
+        interrupts::InterruptHandler();
+        void (*CrashSystem)() = nullptr;
+        CrashSystem();
     }
 }

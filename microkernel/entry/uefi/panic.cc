@@ -39,6 +39,27 @@ namespace skyline::entry
         EarlyLog(buff); \
     }
 
+    void PrintStackTrace(sharedarch::StackFrame* stackFrame)
+    {
+        auto i = 0;
+
+        char buff[512];
+        for (auto i = 0; i < 16; i++)
+        {
+            auto end = string::Append(buff, "  - Func: ");
+            end = string::AppendHexadecimal(end, stackFrame->Entries[i].ReturnAddress, 16);
+            end = string::Append(end, "\n");
+            EarlyLog(buff);
+
+            end = string::Append(buff, "  - Next Frame: ");
+            end = string::AppendHexadecimal(end, stackFrame->Entries[i].NextFrame, 16);
+            end = string::Append(end, "\n");
+            EarlyLog(buff);
+
+            if (stackFrame->Entries[i].NextFrame == 0) break;
+        }
+    }
+
     void EarlyPanic(const char* message, debug::PanicDump* dump, const char* function, const char* fileName, int lineNumber)
     {
         EarlyLog(gPanicBanner);
@@ -67,8 +88,8 @@ namespace skyline::entry
 
         LogRegister(dump->GP, RSI);
         LogRegister(dump->GP, RDI);
-        LogRegister(dump->GP, RSI);
-        LogRegister(dump->GP, RDI);
+        LogRegister(dump->GP, RBP);
+        LogRegister(dump->GP, RSP);
         EarlyLog("\n");
 
         LogRegister(dump->GP, R8);
@@ -81,6 +102,9 @@ namespace skyline::entry
         LogRegister(dump->GP, R14);
         LogRegister(dump->GP, R15);
         EarlyLog("\n");
+
+        EarlyLog("Stack Trace:\n");
+        PrintStackTrace(&dump->StackFrame);
 
         EarlyLog("-----!PANIC!-----\n");
         EarlyLog("Halting...\n");
